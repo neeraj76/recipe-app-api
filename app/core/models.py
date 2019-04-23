@@ -40,7 +40,20 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Tag(models.Model):
-    """ Tag to be used for a reciper """
+    """ Tag to be used for a recipe """
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        # We could have user User below, but using settings is a better way
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    """ Ingredient to be used for a recipe """
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
         # We could have user User below, but using settings is a better way
